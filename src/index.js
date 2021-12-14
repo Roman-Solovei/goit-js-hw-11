@@ -1,12 +1,13 @@
 
 import "./css/styles.css";
+import LoadMoreBtn from "./js/load-more-btn";
 import imagesTemplate from "./templates/imageCard.hbs";
 import ApiImagesService from "./js/api-service";
 import getRefs from "./js/get-refs";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
-import LoadMoreBtn from "./js/load-more-btn";
+
 
 var lightbox = new SimpleLightbox('.gallery a');
 
@@ -49,10 +50,10 @@ function fetchImages() {
       renderImages(images.data.hits);
       loadMoreBtn.enable();
       console.log(images)
-      if (images.data.total === 0) {    
+      if (images.data.totalHits === 0) {    
         Notify.failure("Sorry, there are no images matching your search query. Please try again.");
       }
-      if (images.data.total > 0 && images.data.hits.length === 0) {
+      if (images.data.totalHits > 0 && images.data.hits.length === 0) {
         refs.loadMoreBtn.classList.add('is-hidden');
         Notify.failure("We're sorry, but you've reached the end of search results.");
      }
