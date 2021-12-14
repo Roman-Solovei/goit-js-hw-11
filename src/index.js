@@ -22,11 +22,11 @@ const refs = getRefs();
 // const galleryContainer = refs.gallery;
 
 refs.gallery.addEventListener("click", onImageClick);
-refs.form.addEventListener("submit", onImgageSearch);
+refs.form.addEventListener("submit", onImageSearch);
 refs.loadMoreBtn.addEventListener("click", fetchImages);
 
 
-function onImgageSearch(e) {
+function onImageSearch(e) {
   e.preventDefault();
 
   apiImageService.query = e.currentTarget.elements[0].value;
@@ -50,6 +50,10 @@ function fetchImages() {
       renderImages(images.data.hits);
       loadMoreBtn.enable();
       console.log(images)
+
+      // window.addEventListener("test", null, options);
+
+     
       if (images.data.totalHits === 0) {    
         Notify.failure("Sorry, there are no images matching your search query. Please try again.");
       }
