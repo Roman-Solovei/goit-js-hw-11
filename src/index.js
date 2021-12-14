@@ -88,8 +88,7 @@ function onImgageSearch(e) {
   loadMoreBtn.show();
   apiImageService.resetPage();
   clearGallery();
-  fetchImages();
-  // console.dir(fetchImages())
+  fetchImages();  
 }
 
 function fetchImages() {
@@ -115,10 +114,8 @@ function onFetchError(error) {
   alert(error);
 }
 
-function renderImages(images) {
-  // console.log(images)
-  refs.gallery.insertAdjacentHTML("beforeend", imagesTemplate(images));
-  // console.log(images)
+function renderImages(images) {  
+  refs.gallery.insertAdjacentHTML("beforeend", imagesTemplate(images));  
 }
 
 function clearGallery() {
