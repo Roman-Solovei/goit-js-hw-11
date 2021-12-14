@@ -1,53 +1,3 @@
-// import './css/styles.css';
-// import { fetchCountries } from './js/fetchCountries';
-// import countryList from '../src/css/templates/templatesCountryList.hbs';
-// import oneCountry from '../src/css/templates/templatesOneCountry.hbs';
-// import { Notify } from 'notiflix/build/notiflix-notify-aio';
-
-// var debounce = require('lodash.debounce');
-
-// const refs = {
-//     countryListMarkup: document.querySelector(".country-list"),
-//     countryInfo: document.querySelector(".country-info"),
-//     DEBOUNCE_DELAY: 300,
-//     countryInput: document.querySelector('input#search-box'),
-// };
-
-// refs.countryInput.addEventListener('input', debounce(countrySearch, refs.DEBOUNCE_DELAY));
-
-// function countrySearch(e) {
-//     e.preventDefault();
-//     const searchQuery = e.target.value;
-//     clearCountryInfo();
-    
-//     if (searchQuery !== '') {
-//     fetchCountries(searchQuery)
-//     .then(data => {    
-//         if (data.length > 10) {
-//         Notify.success("Too many matches found. Please enter a more specific name.");
-//             }  
-//         else if (data.length === 1) {
-//              buildCountryQuery(data, oneCountry);
-//         } else if (data.length < 10) {
-//             buildCountryQuery(data, countryList);       
-//         }
-//     })
-//     .catch(error => {    
-//       Notify.failure("Oops, there is no country with that name");
-//     });
-//     };    
-// };
-
-// function buildCountryQuery(countries, template) {
-//     const markup = template(countries);    
-//     refs.countryListMarkup.insertAdjacentHTML('afterbegin', markup);
-// };
-
-// function clearCountryInfo() {
-//     refs.countryInfo.innerHTML = '';
-//     refs.countryListMarkup.innerHTML = '';
-// };
-
 
 import "./css/styles.css";
 import imagesTemplate from "./templates/imageCard.hbs";
@@ -55,9 +5,10 @@ import ApiImagesService from "./js/api-service";
 import getRefs from "./js/get-refs";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 import LoadMoreBtn from "./js/load-more-btn";
 
-// var lightbox = new SimpleLightbox('.gallery a');
+var lightbox = new SimpleLightbox('.gallery a');
 
 const apiImageService = new ApiImagesService();
 
@@ -67,28 +18,27 @@ const loadMoreBtn = new LoadMoreBtn({
 });
 
 const refs = getRefs();
+// const galleryContainer = refs.gallery;
 
 refs.gallery.addEventListener("click", onImageClick);
 refs.form.addEventListener("submit", onImgageSearch);
 refs.loadMoreBtn.addEventListener("click", fetchImages);
-// console.log(apiImageService.pagination)
-// galleryContainer.addEventListener('click', onClickHandler);
+
 
 function onImgageSearch(e) {
   e.preventDefault();
 
   apiImageService.query = e.currentTarget.elements[0].value;
-  
-  console.log(e)
-
-  if (apiImageService.query === "") {    
-      Notify.failure("Пустой запрос")
+ 
+  if (apiImageService.query === "") {
+    Notify.failure("Empty query");
   }
-
+  
   loadMoreBtn.show();
   apiImageService.resetPage();
   clearGallery();
-  fetchImages();  
+  fetchImages();
+
 }
 
 function fetchImages() {
@@ -129,19 +79,11 @@ function onImageClick(e) {
   }
 
   e.preventDefault();
-
-  const fullImgLink = e.target.getAttribute("data-src");
-  const imgAlt = e.target.getAttribute("alt");
-  const imgWidth = e.target.getAttribute("data-width");
-
-  const instance =
-    basicLightbox.create(`
-        <img src=${fullImgLink} alt=${imgAlt}/>
-    `);
-
-  instance.show();
+  lightbox.on('show.simplelightbox');
+  // lightbox.options.captionsData = "alt";  
+  // lightbox.options.captionDelay = 250;  
 }
-
+ 
 
 // function onCreateGalleryItems(images) {
 //   console.log()
