@@ -10,14 +10,7 @@ export default class ApiImagesService {
     this.page = 1;
     this.pagination = 40;
   }
-  // async fetchImages() {
-  //   const url = `${MainUrl}${searchSettings}q=${this.searchQuery}&page=${this.page}&per_page=40&key=${key}`;
 
-  //   return await fetch(url).then((response) => {
-  //     this.incrementPage();
-  //     return response.json();
-  //   });
-  // }
   async fetchImages() {
     const url = `${MainUrl}${searchSettings}q=${this.searchQuery}&page=${this.page}&per_page=${this.pagination}&key=${key}`;
   try {
@@ -45,4 +38,4 @@ export default class ApiImagesService {
   set query(newQuery) {
     this.searchQuery = newQuery;
   }
-}
+};
